@@ -20,23 +20,19 @@ namespace Assignment4
 
         public Product GetProduct(int productId)
         {
-            var product = _db.Products.Join(
-                _db.Categories,
-                product => product.CategoryId,
-                category => category.Id,
-                (product, category) => new Product
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Category = new Category
-                    {
-                        Name = category.Name
-                    },
-                    UnitPrice = product.UnitPrice,
-                    QuantityPerUnit = product.QuantityPerUnit,
-                    UnitsInStock = product.UnitsInStock
-
-                }
+            var product = _db.Products.Select(x =>
+               new Product
+               {
+                   Id = x.Id,
+                   Name = x.Name,
+                   Category = new Category
+                   {
+                       Name = x.Category.Name
+                   },
+                   UnitPrice = x.UnitPrice,
+                   QuantityPerUnit = x.QuantityPerUnit,
+                   UnitsInStock = x.UnitsInStock
+               }
             )
             .FirstOrDefault(x => x.Id == productId);
             return product;
@@ -59,5 +55,21 @@ namespace Assignment4
             .ToList();
             return productList;
         }
+
+        public List<ProductCategoryName> GetProductByName(string searchKeyword)
+        {
+            var productList = _db.Products
+            .Where(x => x.Name.ToLower().Contains(searchKeyword.ToLower()))
+            .Select(x => new ProductCategoryName
+            {
+                ProductName = x.Name,
+                CategoryName = x.Category.Name,
+
+            })
+            .ToList();
+            return productList;
+
+        }
     }
 }
+

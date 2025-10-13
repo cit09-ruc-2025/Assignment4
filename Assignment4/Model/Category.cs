@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment4;
+namespace Assignment4.Model;
 
 public class Category
 {
