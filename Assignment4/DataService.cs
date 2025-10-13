@@ -42,5 +42,22 @@ namespace Assignment4
             return product;
         }
 
+
+        public List<ProductWithCategoryName> GetProductByCategory(int categoryId)
+        {
+            var productList = _db.Products
+            .Where(x => x.CategoryId == categoryId)
+            .Select(x => new ProductWithCategoryName
+            {
+                Id = x.Id,
+                Name = x.Name,
+                UnitPrice = x.UnitPrice,
+                QuantityPerUnit = x.QuantityPerUnit,
+                UnitsInStock = x.UnitsInStock,
+                CategoryName = x.Category.Name
+            })
+            .ToList();
+            return productList;
+        }
     }
 }

@@ -11,3 +11,8 @@ public class Product
   public int UnitsInStock { get; set; }
   public Category Category { get; set; }
 }
+
+public class ProductWithCategoryName : Product
+{
+  public string CategoryName { get; set; }
+}
