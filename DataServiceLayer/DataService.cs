@@ -10,17 +10,13 @@ namespace DataServiceLayer;
 public class DataService : IDataService
 {
 
-  private readonly DatabaseContext _db;
-
-  public DataService()
-  {
-    _db = new DatabaseContext();
-
-  }
+  private readonly DatabaseContext db;
 
   public Product GetProduct(int productId)
   {
-    var product = _db.Products.Select(x =>
+    var db = new DatabaseContext();
+
+    var product = db.Products.Select(x =>
        new Product
        {
          Id = x.Id,
@@ -41,7 +37,9 @@ public class DataService : IDataService
 
   public List<ProductWithCategoryName> GetProductByCategory(int categoryId)
   {
-    var productList = _db.Products
+    var db = new DatabaseContext();
+
+    var productList = db.Products
     .Where(x => x.CategoryId == categoryId)
     .Select(x => new ProductWithCategoryName
     {
@@ -58,7 +56,9 @@ public class DataService : IDataService
 
   public List<ProductCategoryName> GetProductByName(string searchKeyword)
   {
-    var productList = _db.Products
+    var db = new DatabaseContext();
+
+    var productList = db.Products
     .Where(x => x.Name.ToLower().Contains(searchKeyword.ToLower()))
     .Select(x => new ProductCategoryName
     {

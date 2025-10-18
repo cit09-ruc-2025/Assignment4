@@ -40,5 +40,16 @@ namespace WebServiceLayer.Controllers
             return Ok(products);
         }
 
+        [HttpGet("name/{keyword}")]
+        public IActionResult SearchProduct(string keyword)
+        {
+            var products = _dataService.GetProductByName(keyword);
+            if (products.Count < 1)
+            {
+                return NotFound(Array.Empty<object>());
+            }
+            return Ok(products);
+        }
+
     }
 }
